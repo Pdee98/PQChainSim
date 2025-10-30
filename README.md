@@ -1,63 +1,73 @@
-PQChainSim: Post-Quantum Hash-Based Blockchain Simulation Prototype
+**PQChainSim: Post-Quantum Hash-Based Blockchain Simulation Prototype**
 
-PQChainSim is a Python-based simulation framework designed to evaluate hash-based signature (HBS) schemes in blockchain consensus.
-It experimentally compares SPHINCS+ (stateless), XMSS (stateful), and LMS (stateful) by measuring key performance metrics—throughput (TPS), verification latency, block size, and validity ratio—under both normal and adversarial (tamper/replay) conditions.
+PQChainSim is a Python-based simulation framework for evaluating hash-based signature (HBS) schemes in blockchain consensus.
+It experimentally compares SPHINCS+ (stateless), XMSS (stateful), and LMS (stateful) by measuring throughput (TPS), verification latency, block size, and validity ratio under both normal and adversarial (tamper/replay) conditions.
 
-⚠️ Note: PQChainSim is a systems-level simulation tool, not a real cryptographic or peer-to-peer blockchain implementation.
+⚠️ **Note:** PQChainSim is a systems-level simulation, not a real cryptographic or peer-to-peer blockchain implementation.
 It provides an analytical baseline for post-quantum blockchain performance evaluation.
 
-🚀 Quick Start (Windows / PyCharm)
+**🚀 Quick Start (Windows / PyCharm)**
 
-Open the project folder in PyCharm (or VS Code).
-
-Create and activate a virtual environment when prompted.
+Open this folder in **PyCharm** (or VS Code) and create a virtual environment when prompted.
 
 Install dependencies:
 
 pip install numpy pandas matplotlib
 
 
-Run the main experiment:
+Run an experiment interactively:
 
 python main.py
 
 
-Generate summary plots and tables:
+Generate plots and tables:
 
 python plot.py
 
-📂 Project Structure
-File	Description
-main.py	Interactive experiment runner that prompts for parameters (rounds, nodes, payload size, trials, and tags).
-consensus.py	Simplified consensus engine implementing round-robin validation with simulated propagation delay.
-node.py	Defines blockchain nodes, signature generation, and verification logic, enforcing state management for XMSS/LMS.
-hbs.py	Pure-Python simulators for SPHINCS+, XMSS, and LMS providing consistent sign/verify interfaces.
-metrics.py	Logs throughput, latency, and block size metrics into blockchain_metrics.csv.
-adversary.py	Implements tampering and replay scenarios to test adversarial resilience.
-block.py	Minimal data container for block information (payload, signature, timestamp).
-plot.py	Generates analytical plots for validity ratio, block size, and verification latency.
-📊 Output Artifacts
-Output	Description
-blockchain_metrics.csv	Per-block performance logs (TPS, latency, block size, validity).
-verification_log.csv	Results of adversarial replay/tampering tests.
-plot_validity.png	Visualization of verified vs. rejected transactions.
-plot_block_size_by_alg.png	Comparison of block size across XMSS, LMS, and SPHINCS+.
-plot_verify_time_box.png	Verification latency distribution (p50/p95).
+**📂 Files and Structure**
 
-All outputs are automatically generated in the working directory after each simulation run.
+main.py — interactive experiment runner (prompts for rounds, nodes, payload, trials, and tags).
 
-🧠 Research Context
+consensus.py — simple consensus engine implementing round-robin validation with propagation delay.
 
-PQChainSim was developed exclusively for academic experimentation on post-quantum blockchain security.
-It serves as an open, reproducible platform for exploring the trade-offs between stateful and stateless HBS algorithms within blockchain consensus mechanisms.
-Its structured logs and figures align with metrics used in performance sections of peer-reviewed studies.
+node.py — defines blockchain nodes with signature generation, verification, and state handling (for XMSS/LMS).
 
-📜 Citation
+hbs.py — pure-Python simulators for SPHINCS+, XMSS, and LMS with consistent sign/verify logic.
 
-If you use or adapt PQChainSim, please cite:
+metrics.py — logs performance data (TPS, latency, block size) to blockchain_metrics.csv.
+
+adversary.py — simulates tampering and replay attacks for adversarial testing.
+
+block.py — lightweight data container for block structure (payload, signature, timestamp).
+
+plot.py — generates performance plots: validity ratio, block size, and verification latency.
+
+**📊 Typical Outputs**
+
+blockchain_metrics.csv — per-block performance metrics (TPS, latency, block size, validity ratio).
+
+verification_log.csv — adversarial test results (replay/tamper rejection).
+
+plot_validity.png — valid vs. tampered/replayed transactions.
+
+plot_block_size_by_alg.png — average block size comparison across algorithms.
+
+plot_verify_time_box.png — latency distribution (median and p95).
+
+All files are automatically generated after each simulation run in the project directory.
+
+**🧠 Research Context**
+
+PQChainSim was developed exclusively for this study to evaluate post-quantum blockchain consensus.
+It serves as an open, reproducible experimental platform that enables comparative analysis of stateful (XMSS, LMS) and stateless (SPHINCS+) hash-based signatures.
+The generated metrics and figures align with standard performance indicators used in peer-reviewed cryptographic and distributed-ledger research.
+
+**📜 Citation**
+
+If you use or extend PQChainSim, please cite:
 
 Derrick et al, “Empirical Evaluation of Post-Quantum Hash-Based Signature Integration in Blockchain Consensus Using PQChainSim,” 2025.
 
-⚖️ License
+**⚖️ License**
 
-Released under the Apache 2.0 License — free for research and educational use.
+Released under the Apache License 2.0 — free for research, academic, and educational use.
