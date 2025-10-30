@@ -1,0 +1,41 @@
+APPENDIX A — Experimental Reproducibility
+
+Environment
+- Python 3.10+
+- Dependencies: pandas, numpy, matplotlib
+
+Steps
+1) Run experiments (includes adversarial checks):
+   python main_with_adversary.py
+
+   Outputs:
+   - blockchain_metrics.csv (per-block records: verify_time_sec [s], valid [bool], block_size [bytes], alg, payload_bytes, exp_tag, run_id, …)
+   - verification_log.csv   (per-run summaries with 'kind=summary' and columns: tps, p50_ms, p95_ms, valid_ratio; plus 'kind=adversarial' lines)
+
+2) Generate Chapter 4 tables:
+   python make_tables.py
+   Produces:
+   - Table_4_1_summary_by_algorithm.csv
+   - Table_4_2_verify_time_by_algorithm.csv
+   - Table_4_3_block_size_by_algorithm.csv
+   - Table_4_4_tps_by_payload.csv
+   - adversarial_outcomes.csv
+
+3) Generate figures:
+   python plot_figures.py
+   Produces:
+   - Figure_1_TPS_by_Payload.png
+   - Figure_2_Latency_Box_by_Alg.png
+   - Figure_3_Block_Size_by_Alg.png
+   - Figure_4_Validity_by_Alg.png
+
+Defaults (matching manuscript):
+- Nodes: 8
+- Rounds: 200 (paper range 100–200; upper bound chosen by default)
+- Trials: 3
+- Payloads: 512 and 2048 bytes
+
+Notes
+- TPS is a verification-throughput proxy defined in-simulator as: rounds / sum(verify_time_sec).
+- Times in tables are reported in milliseconds (ms). Block sizes are bytes.
+- Randomness and scheduling are deterministic to ensure repeatability.
