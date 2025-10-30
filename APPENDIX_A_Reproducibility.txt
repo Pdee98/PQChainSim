@@ -1,41 +1,95 @@
 APPENDIX A — Experimental Reproducibility
+A.1 Environment Setup
 
-Environment
-- Python 3.10+
-- Dependencies: pandas, numpy, matplotlib
+All experiments were executed using the PQChainSim simulation framework developed for this study.
+The environment specifications are as follows:
 
-Steps
-1) Run experiments (includes adversarial checks):
-   python main_with_adversary.py
+Programming Language: Python 3.10 or later
 
-   Outputs:
-   - blockchain_metrics.csv (per-block records: verify_time_sec [s], valid [bool], block_size [bytes], alg, payload_bytes, exp_tag, run_id, …)
-   - verification_log.csv   (per-run summaries with 'kind=summary' and columns: tps, p50_ms, p95_ms, valid_ratio; plus 'kind=adversarial' lines)
+Dependencies: pandas, numpy, matplotlib
 
-2) Generate Chapter 4 tables:
-   python make_tables.py
-   Produces:
-   - Table_4_1_summary_by_algorithm.csv
-   - Table_4_2_verify_time_by_algorithm.csv
-   - Table_4_3_block_size_by_algorithm.csv
-   - Table_4_4_tps_by_payload.csv
-   - adversarial_outcomes.csv
+These packages support statistical processing, structured data logging, and visualization.
 
-3) Generate figures:
-   python plot_figures.py
-   Produces:
-   - Figure_1_TPS_by_Payload.png
-   - Figure_2_Latency_Box_by_Alg.png
-   - Figure_3_Block_Size_by_Alg.png
-   - Figure_4_Validity_by_Alg.png
+A.2 Experimental Execution
 
-Defaults (matching manuscript):
-- Nodes: 8
-- Rounds: 200 (paper range 100–200; upper bound chosen by default)
-- Trials: 3
-- Payloads: 512 and 2048 bytes
+The simulation experiments were conducted through a controlled execution sequence to ensure repeatability and consistency.
 
-Notes
-- TPS is a verification-throughput proxy defined in-simulator as: rounds / sum(verify_time_sec).
-- Times in tables are reported in milliseconds (ms). Block sizes are bytes.
-- Randomness and scheduling are deterministic to ensure repeatability.
+Run Consensus Simulations (with Adversarial Checks)
+Execute the main experimental script:
+
+python main_with_adversary.py
+
+
+Outputs:
+
+blockchain_metrics.csv — records per-block data, including verify_time_sec (s), valid (bool), block_size (bytes), alg, payload_bytes, exp_tag, and run_id.
+
+verification_log.csv — stores run-level summaries (kind=summary), capturing tps, p50_ms, p95_ms, and valid_ratio. It also includes adversarial test results (kind=adversarial) for tamper and replay detection.
+
+Generate Statistical Tables (Chapter IV Results)
+The aggregated results were compiled using:
+
+python make_tables.py
+
+
+Generated Tables:
+
+Table_4_1_summary_by_algorithm.csv
+
+Table_4_2_verify_time_by_algorithm.csv
+
+Table_4_3_block_size_by_algorithm.csv
+
+Table_4_4_tps_by_payload.csv
+
+adversarial_outcomes.csv
+
+Generate Analytical Figures
+Visualization of key performance metrics was produced using:
+
+python plot_figures.py
+
+
+Generated Figures:
+
+Figure_1_TPS_by_Payload.png
+
+Figure_2_Latency_Box_by_Alg.png
+
+Figure_3_Block_Size_by_Alg.png
+
+Figure_4_Validity_by_Alg.png
+
+A.3 Default Parameters (Aligned with Manuscript)
+Parameter	Default Value
+Nodes	8
+Consensus Rounds	200 (paper range: 100–200)
+Trials per Configuration	3
+Payload Sizes	512 bytes, 2048 bytes
+
+These default values replicate the configuration used for all experiments discussed in section III.
+
+A.4 Notes on Measurement and Determinism
+
+Throughput (TPS) was computed as a verification-throughput proxy within the simulator, defined as:
+
+𝑇
+𝑃
+𝑆
+=
+Rounds
+∑
+(
+verify_time_sec
+)
+TPS=
+∑(verify_time_sec)
+Rounds
+	​
+
+
+Latency metrics (p50, p95) represent the median and 95th percentile verification times, reported in milliseconds (ms).
+
+Block sizes are recorded in bytes.
+
+Randomness and scheduling are controlled deterministically, ensuring full reproducibility across multiple runs.
